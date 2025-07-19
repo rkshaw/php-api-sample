@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# ✅ Allow /help and anything inside /help/
+RewriteCond %{REQUEST_URI} ^/help(?:/.*)?$ [NC]
+RewriteRule ^ - [L]
+
+# 🔄 For everything else, route to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
