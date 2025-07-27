@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 $localPathArr = explode('\\', trim(__DIR__, '\\'));
-$folderPath = str_contains(__DIR__, "xampp\\htdocs\\") ? "/".end($localPathArr) : "";
+$folderPath = str_contains(__DIR__, "\\htdocs\\") ? "/".end($localPathArr) : "";
+define("API_LOCATION", $folderPath);
 
+require __DIR__ . "/api/Model/Exception.php";
 require __DIR__ . "/api/ExceptionHandler/ErrorHandler.php";
 require __DIR__ . "/api/DataLayer/Database.php";
 
@@ -20,15 +22,15 @@ set_exception_handler("ErrorHandler::handleException");
 
 header("Content-type: application/json; charset=UTF-8");
 
-$parts = explode("/", str_replace($folderPath, "", $_SERVER["REQUEST_URI"]));
+$parts = explode("/", str_replace(API_LOCATION, "", $_SERVER["REQUEST_URI"]));
 
-if ($parts[1] != "products") {
+if (count($parts) > 3 && $parts[3] != "products") {
     http_response_code(404);
-    echo json_encode(["message" => "Resource not found"]);
+    echo json_encode(["code" => 404, "message" => "Resource not found"]);
     exit;
 }
 
-$id = $parts[2] ?? null;
+$id = count($parts) > 4 ? $parts[4] ?? null : null;
 
 $database = new Database("localhost", "product_db", "root", "");
 
