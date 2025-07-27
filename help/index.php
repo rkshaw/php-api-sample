@@ -21,7 +21,18 @@
 
       // the following lines will be replaced by docker/configurator, when it runs in a docker-container
       window.ui = SwaggerUIBundle({
-        url: "api.php",
+        //url: "api.php",
+        urls: [
+          {
+            url: "api.php",
+            name: "Development"
+          },
+          {
+            url: "https://petstore.swagger.io/v2/swagger.json",
+            name: "Swagger Demo"
+          },
+        ],
+        primaryName: "Development",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
