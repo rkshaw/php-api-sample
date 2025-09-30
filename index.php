@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-$localPathArr = explode('\\', trim(__DIR__, '\\'));
-$folderPath = str_contains(__DIR__, "\\htdocs\\") ? "/".end($localPathArr) : "";
+$isLive = str_contains(__DIR__, "/public_html/") ? true : false;
+$localPathArr = $isLive ? explode('/', trim(__DIR__, '/')) : explode('\\', trim(__DIR__, '\\'));
+$folderPath = ($isLive || str_contains(__DIR__, "\\htdocs\\")) ? "/".end($localPathArr) : "";
 define("API_LOCATION", $folderPath);
 
 require __DIR__ . "/api/Model/Exception.php";

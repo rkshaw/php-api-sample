@@ -20,6 +20,7 @@ class ProductController
      *     description="Returns JSON for swagger documentation",
      *     operationId="getSwaggerDocument",
      *     security={},
+     *     deprecated=true,
      *     @OA\Response(
      *         response=200,
      *         description="Successful response"
